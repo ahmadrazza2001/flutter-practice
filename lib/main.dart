@@ -81,6 +81,7 @@ class MyApp extends StatelessWidget {
                         ),
                       ),
                       SizedBox(width: 20),
+                      SizedBox(width: 20),
                       Container(
                         padding: const EdgeInsets.all(10),
                         color: const Color.fromARGB(255, 216, 216, 216)
@@ -89,25 +90,7 @@ class MyApp extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        color: const Color.fromARGB(255, 157, 157, 157)
-                            .withOpacity(0.5),
-                        child: const Text("3rd Item"),
-                      ),
-                      SizedBox(width: 20),
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        color:
-                            Color.fromARGB(255, 220, 218, 218).withOpacity(0.5),
-                        child: const Text("4th Item"),
-                      ),
-                    ],
-                  ),
+                  SizedBox(height: 30),
                 ],
               ),
               Positioned(

@@ -1,6 +1,15 @@
 import 'package:flutter/material.dart';
 
 class Page2 extends StatelessWidget {
+  // Sample data for the students and their roll numbers.
+  final List<Map<String, dynamic>> students = [
+    {"name": "Ahmad Raza", "rollNo": "024"},
+    {"name": "Sharjeel Hussain", "rollNo": "013"},
+    {"name": "Samad Yar Babar", "rollNo": "019"},
+    {"name": "Muhammad Ali", "rollNo": "007"},
+    {"name": "Bilal Khattak", "rollNo": "060"},
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,24 +38,19 @@ class Page2 extends StatelessWidget {
         centerTitle: true,
         elevation: 0,
       ),
-      body: Center(
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            Positioned(
-              top: 50,
-              child: Container(
-                width: 200,
-                height: 200,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('1.jpg'),
-                    fit: BoxFit.cover,
-                  ),
-                ),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: ListView.builder(
+          itemCount: students.length,
+          itemBuilder: (context, index) {
+            return Card(
+              elevation: 5,
+              child: ListTile(
+                title: Text(students[index]["name"]),
+                subtitle: Text("Roll No: ${students[index]["rollNo"]}"),
               ),
-            ),
-          ],
+            );
+          },
         ),
       ),
     );
