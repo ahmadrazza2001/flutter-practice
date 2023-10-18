@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:practice/page2.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,19 +11,52 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        fontFamily: 'Roboto', // Set the default font family
+      ),
       home: Scaffold(
         appBar: AppBar(
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Colors.deepPurple,
+                  Colors.purple,
+                  Colors.blue,
+                ],
+              ),
+            ),
+          ),
           title: const Text(
             "DICEBOX",
             style: TextStyle(
               color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 24,
             ),
           ),
+          centerTitle: true,
+          elevation: 0,
         ),
         body: Center(
           child: Stack(
             alignment: Alignment.center,
             children: [
+              Positioned(
+                top: 50,
+                child: Container(
+                  width: 200,
+                  height: 200,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('1.jpg'),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+              ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -31,14 +65,27 @@ class MyApp extends StatelessWidget {
                     children: [
                       Container(
                         padding: const EdgeInsets.all(10),
-                        color: Colors.white.withOpacity(0.5),
-                        child: const Text("First Row - 1st Item"),
+                        child: Builder(
+                          builder: (BuildContext context) {
+                            return ElevatedButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Page2()),
+                                );
+                              },
+                              child: Text("Next Page"),
+                            );
+                          },
+                        ),
                       ),
                       SizedBox(width: 20),
                       Container(
                         padding: const EdgeInsets.all(10),
-                        color: Colors.white.withOpacity(0.5),
-                        child: const Text("First Row - 2nd Item"),
+                        color: const Color.fromARGB(255, 216, 216, 216)
+                            .withOpacity(0.5),
+                        child: const Text("2nd Item"),
                       ),
                     ],
                   ),
@@ -48,14 +95,16 @@ class MyApp extends StatelessWidget {
                     children: [
                       Container(
                         padding: const EdgeInsets.all(10),
-                        color: Colors.white.withOpacity(0.5),
-                        child: const Text("Second Row - 1st Item"),
+                        color: const Color.fromARGB(255, 157, 157, 157)
+                            .withOpacity(0.5),
+                        child: const Text("3rd Item"),
                       ),
                       SizedBox(width: 20),
                       Container(
                         padding: const EdgeInsets.all(10),
-                        color: Colors.white.withOpacity(0.5),
-                        child: const Text("Second Row - 2nd Item"),
+                        color:
+                            Color.fromARGB(255, 220, 218, 218).withOpacity(0.5),
+                        child: const Text("4th Item"),
                       ),
                     ],
                   ),
