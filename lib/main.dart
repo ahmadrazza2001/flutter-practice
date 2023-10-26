@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:practice/page2.dart';
+import 'package:practice/LoginForm.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,7 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        fontFamily: 'Roboto', // Set the default font family
+        fontFamily: 'Roboto',
       ),
       home: Scaffold(
         appBar: AppBar(
@@ -30,7 +32,7 @@ class MyApp extends StatelessWidget {
             ),
           ),
           title: const Text(
-            "DICEBOX",
+            "DICEBOX - LMS",
             style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
@@ -40,75 +42,71 @@ class MyApp extends StatelessWidget {
           centerTitle: true,
           elevation: 0,
         ),
-        body: Center(
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              Positioned(
-                top: 50,
-                child: Container(
-                  width: 200,
-                  height: 200,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('1.jpg'),
-                      fit: BoxFit.cover,
+        body: GridView.count(
+          crossAxisCount: 2,
+          children: <Widget>[
+            _buildCard(FontAwesomeIcons.bookOpen, "Courses", Page2(), context),
+            _buildCard(
+                FontAwesomeIcons.signInAlt, "Login", LoginForm(), context),
+            // Add more cards as needed
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildCard(
+      IconData icon, String label, Widget route, BuildContext context) {
+    return Card(
+      elevation: 4,
+      margin: EdgeInsets.all(10),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: Builder(
+        builder: (BuildContext context) {
+          return InkWell(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => route),
+              );
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    Colors.deepPurple,
+                    Colors.purple,
+                    Colors.blue,
+                  ],
+                ),
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Icon(
+                    icon,
+                    size: 60,
+                    color: Colors.white,
+                  ),
+                  SizedBox(height: 10),
+                  Text(
+                    label,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                ),
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        child: Builder(
-                          builder: (BuildContext context) {
-                            return ElevatedButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => Page2()),
-                                );
-                              },
-                              child: Text("Next Page"),
-                            );
-                          },
-                        ),
-                      ),
-                      SizedBox(width: 20),
-                      SizedBox(width: 20),
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        color: const Color.fromARGB(255, 216, 216, 216)
-                            .withOpacity(0.5),
-                        child: const Text("2nd Item"),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 30),
                 ],
               ),
-              Positioned(
-                bottom: 50,
-                child: Container(
-                  width: 200,
-                  height: 200,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('1.jpg'),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
   }

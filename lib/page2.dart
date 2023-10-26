@@ -28,7 +28,7 @@ class Page2 extends StatelessWidget {
           ),
         ),
         title: const Text(
-          "PAGE 2",
+          "LIST",
           style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
