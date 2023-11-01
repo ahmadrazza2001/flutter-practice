@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:practice/Lab7T2.dart';
+import 'user_provider.dart';
+import 'package:provider/provider.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({Key? key}) : super(key: key);
@@ -9,7 +13,6 @@ class LoginForm extends StatefulWidget {
 
 class _LoginFormState extends State<LoginForm> {
   final _formKey = GlobalKey<FormState>();
-  bool _checkbox = true;
   bool _obscureText = true;
   String? _selectedCategory;
   int? _selectedRole;
@@ -25,7 +28,7 @@ class _LoginFormState extends State<LoginForm> {
   ];
 
   bool _validateCredentials() {
-    return _emailController.text == "test@demo.com" &&
+    return _emailController.text == "ahmad@gmail.com" &&
         _passwordController.text == "123456";
   }
 
@@ -63,7 +66,6 @@ class _LoginFormState extends State<LoginForm> {
           key: _formKey,
           child: ListView(
             children: [
-              //email
               TextFormField(
                 controller: _emailController,
                 decoration: InputDecoration(
@@ -71,16 +73,6 @@ class _LoginFormState extends State<LoginForm> {
                     borderRadius: BorderRadius.circular(25.0),
                   ),
                   hintText: "Email",
-                  labelText: "abc@xyz.com",
-                  prefixIcon: const Icon(Icons.email_outlined),
-                  suffixIcon: IconButton(
-                    icon: const Icon(Icons.close),
-                    onPressed: () {
-                      _emailController.clear();
-                    },
-                  ),
-                  alignLabelWithHint: false,
-                  filled: true,
                 ),
                 keyboardType: TextInputType.emailAddress,
                 textInputAction: TextInputAction.next,
@@ -95,7 +87,6 @@ class _LoginFormState extends State<LoginForm> {
                 },
               ),
               SizedBox(height: 20),
-              //password
               TextFormField(
                 controller: _passwordController,
                 obscureText: _obscureText,
@@ -104,20 +95,6 @@ class _LoginFormState extends State<LoginForm> {
                     borderRadius: BorderRadius.circular(25.0),
                   ),
                   hintText: "Password",
-                  labelText: "Password",
-                  prefixIcon: const Icon(Icons.lock_outline),
-                  suffixIcon: IconButton(
-                    icon: _obscureText
-                        ? const Icon(Icons.visibility_off)
-                        : const Icon(Icons.visibility),
-                    onPressed: () {
-                      setState(() {
-                        _obscureText = !_obscureText;
-                      });
-                    },
-                  ),
-                  alignLabelWithHint: false,
-                  filled: true,
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -170,23 +147,25 @@ class _LoginFormState extends State<LoginForm> {
                   });
                 },
               ),
-              CheckboxListTile(
-                title: const Text(
-                  'Remember Password',
-                  style: TextStyle(color: Colors.grey),
-                ),
-                value: _checkbox,
-                onChanged: (value) {
-                  setState(() => _checkbox = value!);
-                },
-              ),
               SizedBox(height: 30),
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     if (_validateCredentials()) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Login Successful')),
+                      final userProvider =
+                          Provider.of<UserProvider>(context, listen: false);
+                      userProvider.login(_emailController.text);
+
+                      // Save username, role, and campus in SharedPreferences
+                      _saveUserDataInSharedPreferences(
+                        _emailController.text,
+                        _selectedRole == 1 ? 'Student' : 'Teacher',
+                        _selectedCategory ?? 'Select your campus',
+                      );
+
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Lab7T2()),
                       );
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -209,5 +188,13 @@ class _LoginFormState extends State<LoginForm> {
         ),
       ),
     );
+  }
+
+  Future<void> _saveUserDataInSharedPreferences(
+      String username, String role, String campus) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('username', username);
+    await prefs.setString('role', role);
+    await prefs.setString('campus', campus);
   }
 }

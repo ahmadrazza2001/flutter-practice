@@ -1,10 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:practice/Lab7.dart';
+import 'package:practice/Lab7T2.dart';
+
 import 'package:practice/page2.dart';
 import 'package:practice/LoginForm.dart';
+import 'user_provider.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => UserProvider(),
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -32,7 +42,7 @@ class MyApp extends StatelessWidget {
             ),
           ),
           title: const Text(
-            "DICEBOX - LMS",
+            "MAD Tasks",
             style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
@@ -45,10 +55,11 @@ class MyApp extends StatelessWidget {
         body: GridView.count(
           crossAxisCount: 2,
           children: <Widget>[
-            _buildCard(FontAwesomeIcons.bookOpen, "Courses", Page2(), context),
+            _buildCard(FontAwesomeIcons.bookOpen, "Lab-5", Page2(), context),
             _buildCard(
                 FontAwesomeIcons.signInAlt, "Login", LoginForm(), context),
-            // Add more cards as needed
+            _buildCard(FontAwesomeIcons.android, "Lab-7 T1", Lab7(), context),
+            _buildCard(FontAwesomeIcons.android, "Lab-7 T2", Lab7T2(), context),
           ],
         ),
       ),
