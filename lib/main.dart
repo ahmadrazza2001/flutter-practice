@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart'; // Import Firebase Core
+//import 'package:firebase_core/firebase_core.dart'; // Import Firebase Core
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:practice/Lab7.dart';
 import 'package:practice/Lab7T2.dart';
+import 'package:practice/newsAPI.dart';
 import 'package:practice/page2.dart';
 import 'package:practice/LoginForm.dart';
 import 'user_provider.dart';
@@ -10,7 +11,7 @@ import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  //await Firebase.initializeApp();
   runApp(
     ChangeNotifierProvider(
       create: (context) => UserProvider(),
@@ -67,8 +68,9 @@ class HomeScreen extends StatelessWidget {
         children: <Widget>[
           _buildCard(FontAwesomeIcons.bookOpen, "Lab-5", Page2()),
           _buildCard(FontAwesomeIcons.signInAlt, "Login", LoginForm()),
-          _buildCard(FontAwesomeIcons.android, "Employees", Lab7()),
-          _buildCard(FontAwesomeIcons.android, "Lab-7 T2", Lab7T2()),
+          // _buildCard(FontAwesomeIcons.android, "Employees", Lab7()),
+          //_buildCard(FontAwesomeIcons.android, "Lab-7 T2", Lab7T2()),
+          _buildCard(FontAwesomeIcons.newspaper, "News API", NewsTab()),
         ],
       ),
     );
