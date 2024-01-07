@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:practice/screens/homeScreen.dart';
@@ -28,8 +26,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   _handleGoogleButtonClick() {
     _signInWithGoogle().then((user) {
-      log('\nUser: ${user.user}');
-      log('\nUserAdditionalInfo: ${user.additionalUserInfo}');
+      // log('\nUser: ${user.user}');
+      // log('\nUserAdditionalInfo: ${user.additionalUserInfo}');
 
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (_) => const HomeScreen()));
